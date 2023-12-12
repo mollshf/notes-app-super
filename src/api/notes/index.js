@@ -1,11 +1,11 @@
-const NotesService = require("../../services/inMemory/NotesServices");
+const NotesHandler = require("../../api/notes/handler");
 const routes = require("./routes");
 
 module.exports = {
   name: "notes",
   version: "1.0.0",
   register: async (server, { service }) => {
-    const notesHandler = new NotesService(service);
+    const notesHandler = new NotesHandler(service);
     server.route(routes(notesHandler));
   },
 };
