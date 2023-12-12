@@ -82,5 +82,23 @@ class NotesHandler {
       return response;
     }
   }
-  deleteNoteByIdHandler() {}
+  deleteNoteByIdHandler() {
+    try {
+      const { id } = request.payload;
+      this._service.deleteNoteByid(id);
+      return {
+        status: "success",
+        message: "Catatan berhasil dihapus",
+      };
+    } catch (error) {
+      const response = h.response({
+        status: "fail",
+        message: error.message,
+      });
+      response.code(404);
+      return response;
+    }
+  }
 }
+
+module.exports = NotesHandler;
