@@ -20,15 +20,17 @@ exports.up = (pgm) => {
       type: "TEXT[]",
       notNull: true,
     },
-    createdAt: {
+    created_at: {
       type: "TEXT",
       notNull: true,
     },
-    updatedAt: {
+    updated_at: {
       type: "TEXT",
       notNull: true,
     },
   });
 };
 
-exports.down = (pgm) => {};
+exports.down = (pgm) => {
+  pgm.dropTable("notes");
+};

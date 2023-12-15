@@ -35,7 +35,7 @@ class NotesService {
 
   async getNoteById(id) {
     const query = {
-      text: `SELECT notes WHERE id = $1`,
+      text: `SELECT * FROM notes WHERE id = $1`,
       values: [id],
     };
     const result = await this._pool.query(query);
@@ -51,7 +51,7 @@ class NotesService {
     const updatedAt = new Date().toISOString();
 
     const query = {
-      text: "UPDATE notes SET title = $1, body = $2, tags = $3, updated_at = $4, WHERE id = $5 RETURNING id",
+      text: "UPDATE notes SET title = $1, body = $2, tags = $3, updated_at = $4 WHERE id = $5 RETURNING id",
       values: [title, body, tags, updatedAt, id],
     };
 
@@ -60,6 +60,7 @@ class NotesService {
     if (!result.rows.length) {
       throw new NotFoundError("Gagal memperbarui catatan. Id tidak ditemukan");
     }
+    return result.rows[0].id;
   }
 
   async deleteNoteById(id) {
@@ -73,6 +74,8 @@ class NotesService {
     if (!result.rows.length) {
       throw new NotFoundError("Catatan gagal dihapus. Id tidak ditemukan");
     }
+
+    return result.rows[0].id;
   }
 }
 
