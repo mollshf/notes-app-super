@@ -1,40 +1,29 @@
-const { Pool } = require("pg");
+const fs = require("fs");
 
-const pool = new Pool({
-  user: "developer",
-  host: "localhost",
-  database: "companydb",
-  password: "developer1",
-  port: 5432,
+// Membaca dari input standar (console)
+const readStream = fs.createReadStream(null, {
+  fd: process.stdin.fd,
+  autoClose: false,
 });
 
-// const getAllEmployees = async () => {
-//   // membuka koneksi database
-//   await client.connect();
+// Menulis ke output standar (console)
+const writeStream = fs.createWriteStream(null, {
+  fd: process.stdout.fd,
+  autoClose: false,
+});
 
-//   // melakukan query mendapatkan seluruh data karyawan
-//   const result = await client.query("SELECT * FROM karyawan");
+// Meneruskan data dari input standar ke output standar
+readStream.pipe(writeStream);
 
-//   // menutup koneksi database
-//   await client.end();
+// Menambahkan event listener untuk menangani penutupan
+readStream.on("end", () => {
+  console.log("Read stream has ended.");
+});
 
-//   // mengembalikan seluruh karyawan dalam bentuk JavaScript array of object
-//   return result.rows;
-// };
+writeStream.on("finish", () => {
+  console.log("Write stream has finished.");
+});
 
-// getAllEmployees()
-//   .then((result) => console.log(...result))
-//   .catch((err) => console.log(err));
-
-const insertEmployee = async (id, name, email, address) => {
-  const query = {
-    text: `INSERT INTO karyawan VALUES($1, $2, $3, $4) RETURNING *`,
-    values: [id, name, email, address],
-  };
-  const result = await pool.query(query);
-  return result.rows;
-};
-
-insertEmployee("DCD006", "Subarashi Omoshiroi", "subaomo11@gmail.com", "banda")
-  .then((result) => console.log(...result))
-  .catch((err) => console.log(err));
+// Atau, jika Anda ingin membaca dari input standar dan menuliskannya ke file
+// const writeStreamToFile = fs.createWriteStream('output.txt');
+// readStream.pipe(writeStreamToFile);
