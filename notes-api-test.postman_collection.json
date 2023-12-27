@@ -31,19 +31,20 @@
 							"    const responseJson = pm.response.json();\r",
 							"\r",
 							"    pm.expect(responseJson).to.ownProperty('status');\r",
-							"    pm.expect(responseJson).to.equals('success');\r",
+							"    pm.expect(responseJson.status).to.equals('success');\r",
 							"    pm.expect(responseJson).to.ownProperty('message');\r",
-							"    pm.expect(responseJson).to.equals('User berhasil ditambahkan');\r",
+							"    pm.expect(responseJson.message).to.equals('User berhasil ditambahkan');\r",
 							"    pm.expect(responseJson).to.ownProperty('data');\r",
-							"    pm.expect(responseJson).to.be.an('object');\r",
+							"    pm.expect(responseJson.data).to.be.an('object');\r",
 							"})\r",
 							"\r",
 							"pm.test('response body data should have userId property and not equal to empty', () => {\r",
 							"    const responseJson = pm.response.json();\r",
+							"    console.log(responseJson)\r",
 							"    const { data } = responseJson;\r",
 							"\r",
 							"    pm.expect(data).to.ownProperty('userId');\r",
-							"    pm.expect(data.user.id).to.not.equals('');\r",
+							"    pm.expect(data.userId).to.not.equals('');\r",
 							"\r",
 							"    pm.environment.set('currentUserId', data.userId);\r",
 							"})"
@@ -57,7 +58,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"username\": \"{{$timestamp}} - {{newUsername}}\",\r\n    \"password\": \"{{newPassword}}\",\r\n    \"fullnname\": {{newFullname}}\r\n}",
+					"raw": "{\r\n    \"username\": \"{{$timestamp}} - {{newUsername}}\",\r\n    \"password\": \"{{newPassword}}\",\r\n    \"fullname\": \"{{newFullname}}\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
