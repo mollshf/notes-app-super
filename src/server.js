@@ -1,11 +1,11 @@
-require("dotenv").config();
+require('dotenv').config();
 
-const Hapi = require("@hapi/hapi");
-const { notes } = require("./api/notes");
-const { suba } = require("./api/notes");
-const NotesService = require("./services/inMemory/NotesServices");
-const NotesValidator = require("./validator/notes");
-const ClientError = require("./exception/ClientError");
+const Hapi = require('@hapi/hapi');
+const { notes } = require('./api/notes');
+const { suba } = require('./api/notes');
+const NotesService = require('./services/postgres/NotesService');
+const NotesValidator = require('./validator/notes');
+const ClientError = require('./exception/ClientError');
 
 const init = async () => {
   const notesService = new NotesService();
@@ -14,7 +14,7 @@ const init = async () => {
     host: process.env.HOST,
     routes: {
       cors: {
-        origin: ["*"],
+        origin: ['*'],
       },
     },
   });
@@ -30,14 +30,14 @@ const init = async () => {
     suba,
   ]);
 
-  server.ext("onPreResponse", (request, h) => {
+  server.ext('onPreResponse', (request, h) => {
     // mendapatkan konteks response dari request
     const { response } = request;
 
     // penanganan client error secara internal.
     if (response instanceof ClientError) {
       const newResponse = h.response({
-        status: "fail",
+        status: 'fail',
         message: response.message,
       });
       newResponse.code(response.statusCode);
