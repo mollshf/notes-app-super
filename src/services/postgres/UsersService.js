@@ -39,9 +39,7 @@ class UsersSerivce {
 
     if (result.rows.length > 0) {
       console.log(result.rows[0]);
-      throw new InvariantError(
-        'Gagal menambahkan user. Username sudah digunakan.'
-      );
+      throw new InvariantError('Gagal menambahkan user. Username sudah digunakan.');
     }
   }
 
@@ -73,7 +71,6 @@ class UsersSerivce {
     }
 
     const { id, password: hashedPassword } = result.rows[0];
-
     const match = await bcrypt.compare(password, hashedPassword);
 
     if (!match) {

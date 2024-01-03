@@ -16,6 +16,7 @@ class AuthenticationsService {
   }
 
   async verifyRefreshToken(token) {
+    console.log(token);
     const query = {
       text: `SELECT token FROM authentications WHERE token = $1`,
       values: [token],
@@ -29,7 +30,7 @@ class AuthenticationsService {
   }
 
   async deleteRefreshToken(token) {
-    query = {
+    const query = {
       text: `DELETE FROM authentications WHERE token = $1`,
       values: [token],
     };
