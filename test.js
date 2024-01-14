@@ -1,5 +1,8 @@
 // const fs = require('fs');
 
+const InvariantError = require('./src/exception/InvariantError');
+const NotFoundError = require('./src/exception/NotFoundError');
+
 // // Membaca dari input standar (console)
 // const readStream = fs.createReadStream(null, {
 //   fd: process.stdin.fd,
@@ -36,9 +39,23 @@
 
 // console.log(a);
 
-function a(b) {
-  const c = b;
-  return c;
-}
+// function a(b) {
+//   const c = b;
+//   return c;
+// }
 
-console.log(a(1));
+// console.log(a(1));
+try {
+  throw new InvariantError('ini invariantError');
+  // throw new NotFoundError('ini notFoundError');
+} catch (err) {
+  if (err instanceof NotFoundError) {
+    throw err;
+  }
+
+  try {
+    console.log(a);
+  } catch {
+    throw err;
+  }
+}
