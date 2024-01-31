@@ -32,9 +32,13 @@ class AuthenticationsHandler {
     this.validator.validatePutAuthenticationPayload(request.payload);
     const { refreshToken } = request.payload;
 
+    // memverifikasi apakah user benar memiliki refresh token di database
     await this.authenticationsService.verifyRefreshToken(refreshToken);
-    console.log('test dihandler auth', refreshToken);
+
+    // jika iya, maka decode token tersebut dan ambil id user
     const { id } = this.tokenManager.verifyRefreshToken(refreshToken);
+
+    // lalu perbarui access token
     const accessToken = this.tokenManager.generateAccessToken({ id });
 
     return {

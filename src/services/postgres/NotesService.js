@@ -40,8 +40,6 @@ class NotesService {
       values: [owner],
     };
     const result = await this._pool.query(query);
-    console.log('TEST SUPER BERUTAL', result.rows.map(mapDBToModel));
-    console.log('TEST SUPER BERUTAL', result.rows[0]);
     return result.rows.map(mapDBToModel);
   }
 
