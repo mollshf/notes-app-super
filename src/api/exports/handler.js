@@ -5,6 +5,7 @@ class ExportsHandler {
   }
 
   async postExportNotesHandler(request, h) {
+    console.log('INI ADALAH HANDLER DI EXPORT', request.payload);
     this._validator.validateExportNotesPayload(request.payload);
 
     const message = {
