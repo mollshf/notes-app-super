@@ -45,17 +45,11 @@ const NotFoundError = require('./src/exception/NotFoundError');
 // }
 
 // console.log(a(1));
-try {
-  throw new InvariantError('ini invariantError');
-  // throw new NotFoundError('ini notFoundError');
-} catch (err) {
-  if (err instanceof NotFoundError) {
-    throw err;
-  }
+const chalk = require('chalk');
+const testSrc = require('./src/test');
 
-  try {
-    console.log(a);
-  } catch {
-    throw err;
-  }
-}
+console.log(chalk.yellow(__dirname));
+console.log(chalk.green(testSrc));
+console.log(chalk.red(__filename));
+
+console.log(+new Date());
